@@ -1,11 +1,11 @@
 #!/data/data/com.termux/files/usr/bin/bash
 pkg install proot -y
-folder=kalinethunter
+folder=ubuntu-fs64
 if [ -d "$folder" ]; then
 	first=1
 	echo "skipping downloading"
 fi
-tarball="kalifs-amd64-full.tar.xz"
+tarball="ubuntu-rootfs.tar.xz"
 if [ "$first" != 1 ];then
 	if [ ! -f $tarball ]; then
 		echo "Download Rootfs, this may take a while base on your internet speed."
@@ -30,8 +30,8 @@ if [ "$first" != 1 ];then
 			archurl="i386" ;;
 		*)
 			echo "unknown architecture"; exit 1 ;;
-		esac
-		wget "https://build.nethunter.com/kalifs/kalifs-latest/kalifs-${archurl}-full.tar.xz" -O $tarball
+                esac
+                wget "https://build.nethunter.com/kalifs/kalifs-latest/kalifs-${archurl}-full.tar.xz" -O $tarball
 	fi
 	cur=`pwd`
 	mkdir -p "$folder"
@@ -54,7 +54,7 @@ command+=" -0"
 command+=" -r $folder -q qemu-x86_64-static"
 command+=" -b /dev"
 command+=" -b /proc"
-command+=" -b kalinethunter/root:/dev/shm"
+command+=" -b ubuntu-fs64/root:/dev/shm"
 ## uncomment the following line to have access to the home directory of termux
 #command+=" -b /data/data/com.termux/files/home:/root"
 ## uncomment the following line to mount /sdcard directly to / 
@@ -62,7 +62,6 @@ command+=" -b kalinethunter/root:/dev/shm"
 command+=" -w /root"
 command+=" /usr/bin/env -i"
 command+=" HOME=/root"
-command+="sudo -u kali /bin/bash"
 command+=" PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games"
 command+=" TERM=\$TERM"
 command+=" LANG=C.UTF-8"
