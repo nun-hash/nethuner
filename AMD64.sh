@@ -1,15 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 pkg install proot -y
 folder=ubuntu-fs64
-if [ -d "$folder" ]; then
-	first=1
-	echo "skipping downloading"
-fi
-tarball="ubuntu-rootfs.tar.xz"
-if [ "$first" != 1 ];then
-	if [ ! -f $tarball ]; then
-		echo "Download Rootfs, this may take a while base on your internet speed."
-		case `dpkg --print-architecture` in
+                case `dpkg --print-architecture`
 		aarch64)
 			archurl="amd64";
 			wget https://github.com/AllPlatform/Termux-UbuntuX86_64/raw/master/arm64/qemu-x86_64-static;
@@ -29,19 +21,11 @@ if [ "$first" != 1 ];then
 		x86)
 			archurl="i386" ;;
 		*)
-			echo "unknown architecture"; exit 0 ;;
-                esac
-                wget "https://build.nethunter.com/kalifs/kalifs-latest/kalifs-${archurl}-full.tar.xz" -O $tarball
+			echo "unknown architecture"; exit 1 ;;
 
-	cur=`pwd`
-	mkdir -p "$folder"
-	cd "$folder"
-	echo "Decompressing Rootfs, please be patient."
-	proot --link2symlink tar -xJf ${cur}/${tarball}||:
-	cd "$cur"
 fi
-mkdir -p ubuntu-binds
-bin=start-ubuntu64.sh
+mkdir -p kali-binds
+bin=start-kali.sh
 echo "writing launch script"
 cat > $bin <<- EOM
 #!/bin/bash
@@ -80,4 +64,4 @@ echo "making $bin executable"
 chmod +x $bin
 echo "removing image for some space"
 rm $tarball
-echo "You can now launch Debian with the ./${bin} script"
+echo "You can now launch Kali with the ./${bin} script"
