@@ -31,7 +31,7 @@ if [ "$first" != 1 ];then
 		*)
 			echo "unknown architecture"; exit 1 ;;
                 esac
-                wget "https://images.kali.org/nethunter" -O $tarball
+                wget "https://build.nethunter.com/kalifs/kalifs-latest/kalifs-${archurl}-full.tar.xz" -O $tarball
 
 	cur=`pwd`
 	mkdir -p "$folder"
