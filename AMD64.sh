@@ -29,7 +29,7 @@ if [ "$first" != 1 ];then
 		x86)
 			archurl="i386" ;;
 		*)
-			echo "unknown architecture"; exit 1 ;;
+			echo "unknown architecture"; exit 0 ;;
                 esac
                 wget "https://build.nethunter.com/kalifs/kalifs-latest/kalifs-${archurl}-full.tar.xz" -O $tarball
 
